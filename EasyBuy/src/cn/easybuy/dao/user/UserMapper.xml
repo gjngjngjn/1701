@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.easybuy.dao.user.UserMapper">
+	<insert id="add" parameterType="User">
+		INSERT into easybuy_user(loginName,userName,password,sex,identityCode,email,mobile) 
+		values(#{loginName},#{userName},#{password},#{sex},#{identityCode},#{email},#{mobile})
+	</insert>
+	<select id="getUser" parameterType="User">
+		select id,loginName,userName,password,sex,identityCode,email,mobile,type from easybuy_user where 1=1 
+		<if test="id != null">
+			and id=#{userId}
+		</if>
+		<if test="loginName != null and loginName != ''">
+			and loginName like CONCAT('%',#{loginName},'%')
+		</if>
+	</select>
+	<update id="update" parameterType="User">
+		UPDATE easybuy_user
+			<trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+				<if test="loginName != null and loginName != '' ">loginName=#{loginName},</if>
+				<if test="userName != null and userName != '' ">loginName=#{userName},</if>
+				<if test="type != null and type != '' ">type=#{type},</if>
+				<if test="sex != null and sex != '' ">sex=#{sex},</if>
+				<if test="identityCode != null and identityCode != '' ">identityCode=#{identityCode},</if>
+				<if test="email != null and email != '' ">email=#{email},</if>
+				<if test="mobile != null and mobile != '' ">mobile=#{mobile},</if>
+			</trim>
+	</update>
+	<delete id="deleteUserById" parameterType="Integer">
+		delete from easybuy_user where id=#{id}
+	</delete>
+	<select id="getUserList">
+		
+	</select>
+</mapper>
